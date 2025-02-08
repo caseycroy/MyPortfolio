@@ -22,12 +22,12 @@
         }
         .portfolio-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             flex-wrap: wrap;
         }
         .model-viewer {
             width: 80%;
-            height: 400px;
+            height: 500px;
             margin-top: 20px;
         }
     </style>
@@ -35,7 +35,7 @@
 <body>
     <div class="header">
         <h1>Welcome to My Portfolio</h1>
-        <img src="headshot.jpg" alt="Your Headshot" class="headshot">
+        <img src="chaos.jpg" alt="Your Headshot" class="headshot">
         <p>Hello, I'm [Your Name], a mechanical engineer/3D designer specializing in SolidWorks and product development.</p>
     </div>
 
@@ -48,12 +48,13 @@
     <!-- Load Three.js and the model -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/OrbitControls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/loaders/GLTFLoader.min.js"></script>
     <script>
         // Initialize the scene, camera, and renderer
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.5);  // Adjust size for better fit
         document.getElementById('model-viewer').appendChild(renderer.domElement);
 
         // Set up orbit controls for 3D interaction
@@ -61,8 +62,10 @@
 
         // Load the 3D model
         const loader = new THREE.GLTFLoader();
-        loader.load('path/to/your/model.glb', function (gltf) {
+        loader.load('https://raw.githubusercontent.com/username/repo-name/branch-name/Helicopter.glb', function (gltf) {
             scene.add(gltf.scene);
+        }, undefined, function (error) {
+            console.error('Error loading the model:', error);
         });
 
         // Set camera position
@@ -71,11 +74,10 @@
         // Render the scene
         function animate() {
             requestAnimationFrame(animate);
-            controls.update();
+            controls.update();  // Only required if controls.enableDamping or controls.auto-rotation are enabled
             renderer.render(scene, camera);
         }
         animate();
     </script>
 </body>
 </html>
-kk
